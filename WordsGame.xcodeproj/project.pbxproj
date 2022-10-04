@@ -62,9 +62,9 @@
 			isa = PBXGroup;
 			children = (
 				8A24F6FE28EC4790006D5768 /* WordsGameApp.swift */,
-				8ABE32B528ECB24600C65EE2 /* GameViewModel.swift */,
 				8ABE32B428ECB21E00C65EE2 /* Model */,
 				8AA1BF4A28EC604100E7EEE5 /* Views */,
+				8ABE32B728ECB9B500C65EE2 /* ViewModel */,
 				8AA1BF4328EC5A5600E7EEE5 /* Components */,
 				8A24F70228EC4792006D5768 /* Assets.xcassets */,
 				8A24F70428EC4792006D5768 /* Preview Content */,
@@ -104,6 +104,14 @@
 				8ABE32B228ECB13A00C65EE2 /* Player.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8ABE32B728ECB9B500C65EE2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8ABE32B528ECB24600C65EE2 /* GameViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
