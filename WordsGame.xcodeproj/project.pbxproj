@@ -16,6 +16,7 @@
 		8AA1BF4928EC602D00E7EEE5 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA1BF4828EC602D00E7EEE5 /* GameView.swift */; };
 		8ABE32B328ECB13B00C65EE2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE32B228ECB13A00C65EE2 /* Player.swift */; };
 		8ABE32B628ECB24600C65EE2 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE32B528ECB24600C65EE2 /* GameViewModel.swift */; };
+		8ABE32B928ECE3FC00C65EE2 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE32B828ECE3FC00C65EE2 /* WordCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		8AA1BF4828EC602D00E7EEE5 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		8ABE32B228ECB13A00C65EE2 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8ABE32B528ECB24600C65EE2 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		8ABE32B828ECE3FC00C65EE2 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				8AA1BF4428EC5A7200E7EEE5 /* TitleText.swift */,
 				8AA1BF4628EC5B5A00E7EEE5 /* WordsTextField.swift */,
+				8ABE32B828ECE3FC00C65EE2 /* WordCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				8A24F6FF28EC4790006D5768 /* WordsGameApp.swift in Sources */,
 				8AA1BF4728EC5B5A00E7EEE5 /* WordsTextField.swift in Sources */,
 				8ABE32B328ECB13B00C65EE2 /* Player.swift in Sources */,
+				8ABE32B928ECE3FC00C65EE2 /* WordCell.swift in Sources */,
 				8AA1BF4928EC602D00E7EEE5 /* GameView.swift in Sources */,
 				8ABE32B628ECB24600C65EE2 /* GameViewModel.swift in Sources */,
 			);

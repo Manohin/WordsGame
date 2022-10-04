@@ -7,6 +7,14 @@
 
 import Foundation
 
+enum WordError: Error {
+    case theSameWord
+    case beforeWord
+    case littleWord
+    case wrongWord
+    case undifindedError
+}
+
 class GameViewModel: ObservableObject {
     
     @Published var player1: Player
@@ -22,22 +30,22 @@ class GameViewModel: ObservableObject {
         self.word = word.uppercased()
     }
     
-    func validate (word:String) -> Bool {
+    func validate (word:String) throws {
         let word = word.uppercased()
         guard word != self.word else {
             print("Думаешь самый умный? Составленное слово не должно быть исходным словом!")
-            return false
+            throw WordError.theSameWord
         }
         
         guard !(words.contains(word)) else {
             print("Прояви фантазию, придумай новое слово, которого еще не было!")
-            return false
+            throw WordError.beforeWord
         }
         guard word.count > 1 else {
             print("Слишком короткое слово")
-            return false
+            throw WordError.littleWord
         }
-        return true
+        return
     }
     
     func wordToChars(word:String) -> [Character] {
@@ -49,9 +57,12 @@ class GameViewModel: ObservableObject {
         return chars
     }
     
-    func check (word:String) -> Int {
-        guard self.validate(word: word) else {
-            return 0
+    func check (word:String) throws -> Int {
+        
+        do {
+            try self.validate(word: word)
+        } catch {
+           throw error
         }
         var bigWordArray = wordToChars(word: self.word)
         let smallWordAray = wordToChars(word: word)
@@ -66,14 +77,12 @@ class GameViewModel: ObservableObject {
                 }
                 bigWordArray.remove(at: i)
             } else {
-                print("Такое слово не может бысть составлено!")
-                return 0
+                throw WordError.wrongWord
                 
             }
         }
         guard result == word.uppercased() else {
-            print("Неизвестная ошибка")
-            return 0
+            throw WordError.wrongWord
         }
         words.append(result)
         if isFirst {

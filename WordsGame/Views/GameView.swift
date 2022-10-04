@@ -9,12 +9,20 @@ import SwiftUI
 
 struct GameView: View {
     @State private var word = ""
+    @State private var isAlertPresent = false
+    @State var alertText = ""
     var viewModel: GameViewModel
+    
+    @Environment(\.dismiss) var dismiss
+    @State private var confirmPresent = false
     var body: some View {
         VStack(spacing: 16) {
             HStack {
                 Button {
-                    print("Quit")
+                    confirmPresent.toggle()
+                    
+                    
+                    
                 } label: {
                     Text("Выход")
                         .padding(6)
@@ -55,7 +63,7 @@ struct GameView: View {
                            height: screen.width / 2.2)
                     .background(Color("FirstPlayer"))
                     .cornerRadius(40)
-                    .shadow(color: .red, radius: 4)
+                    .shadow(color: viewModel.isFirst ? .red : .clear, radius: 6)
                 VStack {
                     
                     Text("\(viewModel.player2.score)")
@@ -72,13 +80,34 @@ struct GameView: View {
                            height: screen.width / 2.2)
                     .background(Color("SecondPlayer"))
                     .cornerRadius(40)
-                    .shadow(color: .purple, radius: 4)
+                    .shadow(color: viewModel.isFirst ? .clear : .purple, radius: 6)
             }
             WordsTextField(word: $word, placeHolder: "Ваше слово...")
                 .padding(.horizontal)
                 .padding(.vertical)
             Button {
-               let score = viewModel.check(word: word)
+                
+                var score = 0
+                do {
+                    try score = viewModel.check(word: word)
+                } catch WordError.beforeWord {
+                    
+                    alertText = ("Прояви фантазию, придумай новое слово, которого еще не было!")
+                    isAlertPresent.toggle()
+                } catch WordError.littleWord {
+                    alertText = ("Слово из одной буквы? Не, так не пойдет :)")
+                    isAlertPresent.toggle()
+                } catch WordError.theSameWord {
+                    alertText = ("Cамый умный? Составленное слово не должно быть исходным словом!")
+                    isAlertPresent.toggle()
+                } catch WordError.wrongWord {
+                    alertText = ("Такое слово не может быть составлено!")
+                    isAlertPresent.toggle()
+                } catch {
+                    alertText = ("Неизвестная ошибка")
+                    isAlertPresent.toggle()
+                }
+                
                 if score > 0 {
                     self.word = ""
                 }
@@ -96,12 +125,38 @@ struct GameView: View {
             }
             List {
                 
+                ForEach(0 ..< self.viewModel.words.count, id: \.description ) { item in
+                    WordCell(word: self.viewModel.words[item])
+                        .background(item % 2 == 0 ? Color("FirstPlayer") : Color("SecondPlayer"))
+                        .listRowInsets(EdgeInsets())
+                }
+                
             }.listStyle(.plain)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .colorMultiply(.clear)
+                .background(Color .clear)
             
         }.background(Image("background"))
+            .confirmationDialog("Хочешь съебаться?",
+                                isPresented: $confirmPresent,
+                                titleVisibility: .visible) {
+                Button (role: .destructive) {
+                    self.dismiss()
+                    
+                } label: {
+                    Text("Уйти нахуй отседова")
+                }
+                Button (role: .cancel) {
+                    
+                } label: {
+                    Text("Остаюсь") }
+            }
+        
+                                .alert(alertText,
+                                       isPresented: $isAlertPresent) {
+                                    Text("OK, понял")
+                                }
     }
+    
 }
 
 struct GameView_Previews: PreviewProvider {
