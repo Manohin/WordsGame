@@ -16,27 +16,27 @@ enum WordError: Error {
 }
 
 class GameViewModel: ObservableObject {
-    
+
     @Published var player1: Player
     @Published var player2: Player
     @Published var words = [String]()
-    
+
     let word: String
     var isFirst = true
-    
+
     init(player1: Player, player2: Player, word: String) {
         self.player1 = player1
         self.player2 = player2
         self.word = word.uppercased()
     }
-    
-    func validate (word:String) throws {
+
+    func validate (word: String) throws {
         let word = word.uppercased()
         guard word != self.word else {
             print("Думаешь самый умный? Составленное слово не должно быть исходным словом!")
             throw WordError.theSameWord
         }
-        
+
         guard !(words.contains(word)) else {
             print("Прояви фантазию, придумай новое слово, которого еще не было!")
             throw WordError.beforeWord
@@ -47,18 +47,17 @@ class GameViewModel: ObservableObject {
         }
         return
     }
-    
-    func wordToChars(word:String) -> [Character] {
+    func wordToChars(word: String) -> [Character] {
         var chars = [Character]()
-        
+
         for char in word.uppercased() {
             chars.append(char)
         }
         return chars
     }
-    
-    func check (word:String) throws -> Int {
-        
+
+    func check (word: String) throws -> Int {
+
         do {
             try self.validate(word: word)
         } catch {
@@ -67,7 +66,7 @@ class GameViewModel: ObservableObject {
         var bigWordArray = wordToChars(word: self.word)
         let smallWordAray = wordToChars(word: word)
         var result = ""
-        
+
         for char in smallWordAray {
             if bigWordArray.contains(char) {
                 result.append(char)
@@ -78,7 +77,7 @@ class GameViewModel: ObservableObject {
                 bigWordArray.remove(at: i)
             } else {
                 throw WordError.wrongWord
-                
+
             }
         }
         guard result == word.uppercased() else {
@@ -93,5 +92,5 @@ class GameViewModel: ObservableObject {
         isFirst.toggle()
         return result.count
     }
-    
+
 }

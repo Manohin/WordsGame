@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct WordCell: View {
-    
-    
+
     let word: String
     var body: some View {
         HStack {

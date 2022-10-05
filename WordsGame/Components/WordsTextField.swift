@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct WordsTextField: View {
-    
+
     @State var word: Binding<String>
     var placeHolder: String
     var body: some View {
-            
+
             TextField(placeHolder,
                       text: word)
             .font(.title2)
@@ -21,5 +21,3 @@ struct WordsTextField: View {
             .cornerRadius(12)
     }
 }
-
-

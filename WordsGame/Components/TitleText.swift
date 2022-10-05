@@ -10,7 +10,7 @@ import SwiftUI
 struct TitleText: View {
     @State var text: String
     var body: some View {
-        Text (text)
+        Text(text)
             .padding()
             .font(.custom("AvenirNext-Bold", size: 42))
             .cornerRadius(16)

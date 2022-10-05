@@ -12,7 +12,7 @@ struct GameView: View {
     @State private var isAlertPresent = false
     @State var alertText = ""
     var viewModel: GameViewModel
-    
+
     @Environment(\.dismiss) var dismiss
     @State private var confirmPresent = false
     var body: some View {
@@ -20,9 +20,7 @@ struct GameView: View {
             HStack {
                 Button {
                     confirmPresent.toggle()
-                    
-                    
-                    
+
                 } label: {
                     Text("Выход")
                         .padding(6)
@@ -34,21 +32,19 @@ struct GameView: View {
                         .font(.custom("AvenirNext-Bold",
                                       size: 18))
                 }
-                
+
                 Spacer()
             }
-            
-            
+
             Text(viewModel.word)
                 .font(.custom("AvenirNext-Bold",
                               size: 30))
                 .foregroundColor(.white)
-            
+
             HStack(spacing: 12) {
-                
-                
+
                 VStack {
-                    
+
                     Text("\(viewModel.player1.score)")
                         .font(.custom("AvenirNext-Bold",
                                       size: 60))
@@ -57,7 +53,7 @@ struct GameView: View {
                         .font(.custom("AvenirNext-Bold",
                                       size: 24))
                         .foregroundColor(.white)
-                    
+
                 }.padding(20)
                     .frame(width: screen.width / 2.2 ,
                            height: screen.width / 2.2)
@@ -65,7 +61,7 @@ struct GameView: View {
                     .cornerRadius(40)
                     .shadow(color: viewModel.isFirst ? .red : .clear, radius: 6)
                 VStack {
-                    
+
                     Text("\(viewModel.player2.score)")
                         .font(.custom("AvenirNext-Bold",
                                       size: 60))
@@ -74,7 +70,7 @@ struct GameView: View {
                         .font(.custom("AvenirNext-Bold",
                                       size: 24))
                         .foregroundColor(.white)
-                    
+
                 }.padding(20)
                     .frame(width: screen.width / 2.2 ,
                            height: screen.width / 2.2)
@@ -86,16 +82,16 @@ struct GameView: View {
                 .padding(.horizontal)
                 .padding(.vertical)
             Button {
-                
+
                 var score = 0
                 do {
                     try score = viewModel.check(word: word)
                 } catch WordError.beforeWord {
-                    
+
                     alertText = ("Прояви фантазию, придумай новое слово, которого еще не было!")
                     isAlertPresent.toggle()
                 } catch WordError.littleWord {
-                    alertText = ("Слово из одной буквы? Не, так не пойдет :)")
+                    alertText = ("Введи слово хотя бы из 2 букв")
                     isAlertPresent.toggle()
                 } catch WordError.theSameWord {
                     alertText = ("Cамый умный? Составленное слово не должно быть исходным словом!")
@@ -107,7 +103,7 @@ struct GameView: View {
                     alertText = ("Неизвестная ошибка")
                     isAlertPresent.toggle()
                 }
-                
+
                 if score > 0 {
                     self.word = ""
                 }
@@ -121,42 +117,42 @@ struct GameView: View {
                     .font(.custom("AvenirNext-Bold",
                                   size: 27))
                     .padding(.horizontal)
-                
+
             }
             List {
-                
+
                 ForEach(0 ..< self.viewModel.words.count, id: \.description ) { item in
                     WordCell(word: self.viewModel.words[item])
                         .background(item % 2 == 0 ? Color("FirstPlayer") : Color("SecondPlayer"))
                         .listRowInsets(EdgeInsets())
                 }
-                
+
             }.listStyle(.plain)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color .clear)
-            
+
         }.background(Image("background"))
             .confirmationDialog("Хочешь съебаться?",
                                 isPresented: $confirmPresent,
                                 titleVisibility: .visible) {
-                Button (role: .destructive) {
+                Button(role: .destructive) {
                     self.dismiss()
-                    
+
                 } label: {
                     Text("Уйти нахуй отседова")
                 }
-                Button (role: .cancel) {
-                    
+                Button(role: .cancel) {
+
                 } label: {
                     Text("Остаюсь") }
             }
-        
+
                                 .alert(alertText,
                                        isPresented: $isAlertPresent) {
                                     Text("OK, понял")
                                 }
     }
-    
+
 }
 
 struct GameView_Previews: PreviewProvider {
